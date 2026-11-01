@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en" data-zyn="27">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#050507">
+<title>ZTC BOOSTER POWERED BY · ZEYNAR</title>
+<style>
+/* ─── DESIGN TOKENS ─────────────────────────────────────────── */
+:root{
+  --bg:#050507;--panel:#0f0f12;--panel2:#141418;
+  --red:#e31c2e;--red2:#9e0711;--red3:#ff4855;
+  --white:#f2f2f4;--muted:#888;--line:#212126;
+  --green:#55d99a;--green-glow:#55d99a55;
+  --ease:cubic-bezier(.2,.8,.2,1);
+  --ease-spring:cubic-bezier(.34,1.56,.64,1);
+  --ring-c:176; /* circumference for r=28 */
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-tap-highlight-color:transparent;scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--white);
+  font-family:Inter,system-ui,Arial,sans-serif;
+  letter-spacing:.08px;
+  overflow-x:hidden;
+  position:relative;
+}
+
+/* ─── ANIMATED GRID BACKGROUND ─────────────────────────────── */
+body::before{
+  content:'';
+  position:fixed;inset:0;z-index:0;
+  background-image:
+    linear-gradient(rgba(227,28,46,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(227,28,46,.035) 1px,transparent 1px);
+  background-size:38px 38px;
+  animation:grid-drift 28s linear infinite;
+  pointer-events:none;
+  will-change:background-position;
+}
+@keyframes grid-drift{
+  0%{background-position:0 0}
+  100%{background-position:0 38px}
+}
+/* Radial vignette overlay */
+body::after{
+  content:'';
+  position:fixed;inset:0;z-index:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 0%,#3a070f22 0%,transparent 70%);
+  pointer-events:none;
+}
+
+/* ─── LAYOUT ────────────────────────────────────────────────── */
+.wrap{
+  max-width:1080px;margin:auto;
+  padding:18px 14px 52px;
+  position:relative;z-index:1;
+}
+
+/* ─── HEADER ────────────────────────────────────────────────── */
+header{
+  display:flex;align-items:center;
+  justify-content:space-between;gap:12px;
+  padding:8px 0 16px;
+  border-bottom:1px solid #ffffff08;
+  margin-bottom:20px;
+}
+.brand{display:flex;align-items:center;gap:12px}
+/* Spinning logo border */
+.logo-wrap{
+  position:relative;width:50px;height:50px;
+  flex-shrink:0;border-radius:14px;overflow:hidden;
+}
+.logo-wrap::before{
+  content:'';
+  position:absolute;inset:-50%;
+  background:conic-gradient(from 0deg,
+    transparent 0deg,
+    #ff2232 50deg,
+    #ff6870 100deg,
+    transparent 150deg
+  );
+  animation:logo-spin 3.5s linear infinite;
+  will-change:transform;
+}
+.logo-inner{
+  position:absolute;inset:1.5px;
+  border-radius:12px;
+  background:linear-gradient(140deg,#e8333a,#820810);
+  display:grid;place-items:center;
+  font-size:19px;font-weight:900;color:#fff;
+  z-index:2;letter-spacing:-1px;
+}
+@keyframes logo-spin{to{transform:rotate(360deg)}}
+
+.brand-text h1{
+  font-size:16px;letter-spacing:3px;
+  font-weight:900;line-height:1;
+}
+.brand-text p{
+  margin-top:4px;font-size:9px;
+  letter-spacing:2px;color:var(--muted);
+}
+.header-badges{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.tag{
+  font-size:9px;letter-spacing:1.5px;color:#ff777c;
+  border:1px solid #482326;background:#160b0c;
+  border-radius:30px;padding:7px 10px;white-space:nowrap;
+}
+.ver-tag{
+  font-size:9px;letter-spacing:1px;color:#777;
+  border:1px solid #222;background:#0d0d0f;
+  border-radius:30px;padding:7px 10px;
+}
+
+/* ─── HERO ──────────────────────────────────────────────────── */
+.hero{
+  border:1px solid #3a1e22;border-radius:20px;
+  padding:28px 22px;
+  background:
+    linear-gradient(100deg,rgba(14,7,9,.97) 0%,rgba(14,7,9,.82) 55%,rgba(14,7,9,.55) 100%),
+    url('banner.png') center 42%/cover no-repeat;
+  position:relative;overflow:hidden;
+  box-shadow:0 18px 60px #00000088,inset 0 1px #ffffff0c;
+  animation:hero-entrance .5s var(--ease) both;
+}
+@keyframes hero-entrance{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:translateY(0)}
+}
+/* Scanline overlay */
+.hero::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  background:repeating-linear-gradient(
+    0deg,
+    transparent,transparent 3px,
+    rgba(0,0,0,.025) 3px,rgba(0,0,0,.025) 4px
+  );
+  pointer-events:none;
+}
+/* Ambient orb */
+.hero::after{
+  content:'';position:absolute;
+  width:220px;height:220px;
+  border-radius:50%;
+  background:radial-gradient(circle,#e31c2e14 0%,transparent 70%);
+  right:-60px;top:-70px;
+  animation:orb-pulse 4s ease-in-out infinite alternate;
+  pointer-events:none;
+}
+@keyframes orb-pulse{
+  from{transform:scale(1);opacity:.7}
+  to{transform:scale(1.2);opacity:1}
+}
+.kicker{
+  font-size:10px;letter-spacing:3.5px;
+  color:#ff6570;font-weight:800;
+}
+.hero h2{
+  font-size:clamp(30px,8vw,48px);line-height:1.02;
+  letter-spacing:-2px;margin:12px 0 10px;font-weight:900;
+}
+.hero h2 .accent{
+  background:linear-gradient(90deg,var(--red3),var(--red));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.hero-sub{
+  font-size:12px;line-height:1.75;color:#999;max-width:520px;
+}
+.hero-stats{
+  display:flex;gap:8px;flex-wrap:wrap;margin-top:20px;
+}
+.stat{
+  background:#0a0a0c;border:1px solid #2a2a30;
+  border-radius:9px;padding:9px 12px;
+  font-size:10px;color:#888;letter-spacing:.5px;
+}
+.stat b{color:#e8e8ee;display:block;font-size:13px;margin-top:3px}
+.titan-score-badge{
+  display:flex;align-items:center;gap:8px;
+  background:linear-gradient(110deg,#1a0a0d,#110d0e);
+  border:1px solid #4a1a22;border-radius:9px;padding:9px 12px;
+  font-size:10px;color:#888;
+}
+.titan-score-badge .score-val{
+  font-size:20px;font-weight:900;color:var(--red3);
+  letter-spacing:-1px;line-height:1;
+  font-variant-numeric:tabular-nums;
+}
+
+/* ─── QUICK BOOST PANEL ─────────────────────────────────────── */
+.qb-section{margin-top:16px}
+.qb-panel{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:16px 18px;
+  background:linear-gradient(110deg,#150a0b 0%,#0e0e11 100%);
+  border:1px solid #3a1e22;border-radius:16px;
+  box-shadow:0 8px 28px #00000055,0 0 0 1px #ff303808;
+}
+.qb-left{min-width:0}
+.qb-label{
+  font-size:10px;letter-spacing:3px;color:#ff6570;
+  font-weight:800;margin-bottom:4px;
+}
+.qb-title{font-size:14px;font-weight:700;letter-spacing:.5px}
+.qb-sub{font-size:10px;color:#777;margin-top:3px;line-height:1.5}
+.qb-btn{
+  flex-shrink:0;
+  display:flex;align-items:center;gap:8px;
+  background:linear-gradient(110deg,var(--red),var(--red2));
+  border:0;border-radius:12px;
+  color:#fff;font:inherit;font-size:11px;font-weight:900;
+  letter-spacing:1.5px;
+  padding:13px 20px;cursor:pointer;
+  box-shadow:0 6px 22px #e31c2e33;
+  position:relative;overflow:hidden;
+  transition:box-shadow .2s,transform .15s var(--ease-spring);
+}
+.qb-btn::after{
+  content:'';position:absolute;
+  top:0;left:-80%;width:60%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);
+  transform:skewX(-18deg);
+  transition:left .55s ease;
+}
+.qb-btn:hover::after{left:140%}
+.qb-btn:hover{box-shadow:0 8px 30px #e31c2e55}
+.qb-btn:active{transform:scale(.97)}
+.qb-icon{font-size:16px}
+.qb-status-bar{
+  display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;
+}
+.qb-chip{
+  font-size:9px;letter-spacing:1px;color:#666;
+  background:#0d0d10;border:1px solid #222;
+  border-radius:20px;padding:5px 9px;
+}
+.qb-chip.on{color:#55d99a;border-color:#1e4a38;background:#0a1f18}
+
+/* ─── SECTIONS ──────────────────────────────────────────────── */
+.section{
+  margin-top:20px;
+  animation:section-up .4s var(--ease) both;
+}
+@keyframes section-up{
+  from{opacity:0;transform:translateY(14px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.section:nth-child(2){animation-delay:.04s}
+.section:nth-child(3){animation-delay:.08s}
+.section:nth-child(4){animation-delay:.12s}
+.section:nth-child(5){animation-delay:.16s}
+.section:nth-child(6){animation-delay:.2s}
+.section:nth-child(7){animation-delay:.24s}
+.section:nth-child(8){animation-delay:.28s}
+.section:nth-child(9){animation-delay:.32s}
+.section:nth-child(10){animation-delay:.36s}
+.head{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:10px;margin:0 2px 12px;
+}
+.head h3{
+  font-size:11px;letter-spacing:2px;
+  text-transform:uppercase;font-weight:700;
+  position:relative;
+}
+.head h3::after{
+  content:'';display:block;
+  height:2px;width:20px;margin-top:5px;border-radius:2px;
+  background:linear-gradient(90deg,var(--red),transparent);
+}
+.head span{font-size:9px;color:var(--muted);letter-spacing:1px}
+
+/* ─── MODES ─────────────────────────────────────────────────── */
+.modes{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.mode{
+  position:relative;text-align:left;
+  background:linear-gradient(145deg,#151518,#0e0e11);
+  border:1px solid var(--line);border-radius:14px;
+  color:#fff;padding:15px 13px;cursor:pointer;
+  min-height:97px;
+  transition:border-color .2s,background .2s,box-shadow .2s,transform .15s var(--ease-spring);
+  contain:layout paint;
+}
+.mode small{color:#666;font-size:9px;letter-spacing:1px}
+.mode strong{display:block;font-size:13px;margin-top:10px;font-weight:700}
+.mode em{display:block;font-style:normal;font-size:10px;color:#888;margin-top:4px}
+.tick{
+  position:absolute;right:11px;top:11px;
+  width:16px;height:16px;
+  border:1.5px solid #444;border-radius:50%;
+  transition:background .2s,border-color .2s,box-shadow .2s;
+}
+.mode.active{
+  border-color:var(--red);
+  background:linear-gradient(145deg,#221013,#120e0f);
+}
+.mode.active .tick{
+  background:var(--red);border-color:var(--red);
+  box-shadow:0 0 10px #e31c2e55;
+}
+/* Glow pulse on active mode */
+.mode.active::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(145deg,#e31c2e06,transparent);
+  animation:mode-glow 2.5s ease-in-out infinite alternate;
+  pointer-events:none;
+}
+@keyframes mode-glow{
+  from{opacity:.5}to{opacity:1}
+}
+.mode:hover:not(.active){border-color:#5a2a30;transform:translateY(-2px)}
+.mode:active{transform:scale(.985)}
+
+/* ─── PANEL ─────────────────────────────────────────────────── */
+.panel{
+  padding:15px;
+  border:1px solid var(--line);border-radius:16px;
+  background:linear-gradient(145deg,#131316,#0c0c0f);
+  box-shadow:0 8px 32px #00000044;
+}
+
+/* ─── GAMES ─────────────────────────────────────────────────── */
+.games{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.game{
+  display:flex;align-items:center;gap:10px;text-align:left;
+  padding:11px 10px;border:1px solid var(--line);
+  background:#0e0e11;color:#fff;border-radius:12px;cursor:pointer;
+  min-width:0;
+  transition:border-color .18s,background .18s,transform .15s var(--ease-spring);
+  contain:layout paint;
+}
+.game.active{border-color:var(--red);background:#1e1013}
+.game:hover:not(.active){border-color:#5a2a30;transform:translateY(-1px)}
+.game:active{transform:scale(.985)}
+.game-mark{
+  width:38px;height:38px;flex-shrink:0;
+  border-radius:10px;display:grid;place-items:center;
+  background:#211518;border:1px solid #3a2226;
+  color:#ff7078;font-weight:900;font-size:9px;letter-spacing:.5px;
+}
+.game.active .game-mark{background:#2a1518;border-color:#5a2228}
+.game strong{display:block;font-size:11px;line-height:1.3}
+.game small{display:block;font-size:9px;color:#777;margin-top:3px}
+
+/* ─── OPTIONS / CHIPS ───────────────────────────────────────── */
+.options{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.opt{
+  border:1px solid var(--line);background:#0e0e11;
+  color:#bbb;border-radius:10px;padding:13px 6px;
+  cursor:pointer;font:inherit;font-size:11px;
+  transition:border-color .18s,background .18s,color .18s,transform .15s var(--ease-spring);
+  contain:layout paint;
+}
+.opt b{display:block;font-size:18px;color:#eee;margin-bottom:5px;font-variant-numeric:tabular-nums}
+.opt small{display:block;font-size:9px;color:#777;letter-spacing:.5px}
+.opt.active{border-color:var(--red);background:#1e1013;color:#ff8088}
+.opt.active b{color:#ff5560}
+.opt:hover:not(.active){border-color:#5a2a30;transform:translateY(-1px)}
+.opt:active{transform:scale(.985)}
+.note{font-size:10px;line-height:1.65;color:#777;margin:11px 2px 0}
+
+/* ─── SELECTS ───────────────────────────────────────────────── */
+select{
+  width:100%;background:#0e0e11;
+  border:1px solid #303038;border-radius:11px;
+  padding:13px;color:#eee;outline:none;font:inherit;
+  transition:border-color .18s;
+}
+select:focus{border-color:var(--red)}
+.select-grid{display:grid;grid-template-columns:1fr;gap:9px}
+
+/* ─── TOGGLE LIST ───────────────────────────────────────────── */
+.toggle-list{display:grid;grid-template-columns:1fr;gap:8px}
+.toggle-row{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;border:1px solid var(--line);background:#0e0e11;
+  padding:12px 14px;border-radius:11px;
+  transition:border-color .2s,background .2s;
+}
+.toggle-row:has(input:checked){
+  border-color:#3a1e24;
+  background:linear-gradient(110deg,#140f11,#0e0e11);
+}
+.toggle-row label{font-size:11px;line-height:1.4;color:#d8d8dc;cursor:pointer}
+.toggle-row small{display:block;color:#777;font-size:9px;margin-top:4px}
+.switch{position:relative;flex-shrink:0;width:44px;height:24px}
+.switch input{opacity:0;width:0;height:0}
+.slider{
+  position:absolute;inset:0;border-radius:22px;
+  background:#2a2a30;border:1px solid #3a3a44;
+  cursor:pointer;transition:.22s;
+}
+.slider::before{
+  content:'';position:absolute;
+  width:16px;height:16px;left:3px;top:3px;
+  background:#777;border-radius:50%;
+  transition:transform .22s var(--ease-spring),background .22s;
+}
+.switch input:checked+.slider{background:#7a1520;border-color:#b42030}
+.switch input:checked+.slider::before{
+  transform:translateX(20px);background:#fff;
+  box-shadow:0 0 8px #ffffff44;
+}
+.switch input:focus-visible+.slider{outline:2px solid #ff6971;outline-offset:3px}
+
+/* ─── ANIMATION SCALE ───────────────────────────────────────── */
+.range-wrap{
+  padding:15px;border:1px solid var(--line);
+  border-radius:13px;background:#0e0e11;
+}
+.range-wrap label{display:block;font-size:11px;color:#d8d8dc;margin-bottom:11px}
+.range-wrap input[type=range]{
+  width:100%;accent-color:var(--red);height:4px;cursor:pointer;
+}
+.range-values{display:flex;gap:6px;flex-wrap:wrap;margin-top:13px}
+.scale{
+  padding:7px 10px;border:1px solid #2a2a30;
+  border-radius:8px;font-size:10px;background:#141417;
+  color:#aaa;cursor:pointer;font:inherit;
+  transition:border-color .18s,color .18s,background .18s;
+}
+.scale.active{border-color:var(--red);color:#ff8088;background:#1e1013}
+.scale:hover:not(.active){border-color:#5a2a30}
+
+/* ─── ACTION BUTTONS ────────────────────────────────────────── */
+.action{
+  width:100%;border:0;border-radius:12px;
+  padding:15px;color:#fff;font:inherit;
+  font-size:11px;font-weight:900;letter-spacing:2px;
+  cursor:pointer;margin-top:10px;
+  position:relative;overflow:hidden;
+  transition:box-shadow .2s,transform .15s var(--ease-spring),filter .2s;
+}
+/* Shimmer */
+.action::after{
+  content:'';position:absolute;
+  top:0;left:-80%;width:55%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);
+  transform:skewX(-18deg);
+  transition:left .55s ease;
+}
+.action:hover::after{left:140%}
+.action:active{transform:scale(.985)}
+.action:active::after{display:none}
+.action.primary{
+  background:linear-gradient(110deg,#df1c2c,#a50917);
+  box-shadow:0 6px 22px #e31c2e22;
+}
+.action.primary:hover{box-shadow:0 8px 30px #e31c2e44;filter:brightness(1.07)}
+.action.secondary{
+  background:#131316;border:1px solid #2a2a30;
+  color:#ccc;box-shadow:none;
+}
+.action.secondary:hover{border-color:#5a3040;background:#1a1a1e}
+.action.danger{
+  background:#13100f;border:1px solid #5a2a22;color:#ff7070;
+}
+.action.danger:hover{border-color:#9a3a30;background:#1e1210}
+/* Default = primary */
+.action:not(.secondary):not(.danger){
+  background:linear-gradient(110deg,#df1c2c,#a50917);
+  box-shadow:0 6px 22px #e31c2e22;
+}
+.action:not(.secondary):not(.danger):hover{
+  box-shadow:0 8px 30px #e31c2e44;
+  filter:brightness(1.07);
+}
+button:focus-visible,input:focus-visible,select:focus-visible{
+  outline:2px solid #ff6971;outline-offset:3px;
+}
+
+/* ─── STATUS ────────────────────────────────────────────────── */
+.status{
+  display:flex;align-items:flex-start;gap:10px;
+  border:1px solid var(--line);background:#0a0a0d;
+  padding:12px 14px;border-radius:11px;
+  color:#888;font-size:10px;line-height:1.65;
+  margin-top:10px;
+  transition:border-color .25s,background .25s;
+}
+.status[data-state="ok"]{border-color:#1e4a38;background:#0a150f}
+.status[data-state="error"]{border-color:#5a2230;background:#120a0c}
+.dot{
+  width:8px;height:8px;border-radius:50%;
+  background:#ff4148;margin-top:4px;flex-shrink:0;
+  box-shadow:0 0 0 0 rgba(255,65,72,.4);
+  animation:dot-pulse 2.2s ease-in-out infinite;
+}
+@keyframes dot-pulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(255,65,72,.5)}
+  50%{box-shadow:0 0 0 6px rgba(255,65,72,0)}
+}
+.feature-state{
+  font-size:9px;letter-spacing:1px;
+  color:#ff8088;white-space:nowrap;flex-shrink:0;
+}
+
+/* ─── MONITOR / METRICS ─────────────────────────────────────── */
+.monitor-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);gap:9px;
+  margin-top:13px;
+}
+.metric{
+  border:1px solid var(--line);background:#0e0e11;
+  padding:14px;border-radius:13px;
+  transition:border-color .2s;
+  contain:layout paint;
+}
+.metric:hover{border-color:#3a2030}
+.label-row{font-size:9px;color:#777;letter-spacing:1px;margin-bottom:8px}
+/* Ring metric */
+.ring-metric{display:flex;align-items:center;gap:10px}
+.ring-container{position:relative;width:56px;height:56px;flex-shrink:0}
+.ring-container svg{transform:rotate(-90deg);overflow:visible}
+.ring-track{stroke:#1e1e22;fill:none}
+.ring-fill{fill:none;stroke-linecap:round;transition:stroke-dashoffset .45s ease}
+.ring-label{
+  position:absolute;inset:0;display:grid;place-items:center;
+  font-size:13px;font-weight:700;letter-spacing:-.5px;
+  font-variant-numeric:tabular-nums;
+}
+.ring-info strong{
+  display:block;font-size:22px;font-weight:700;
+  letter-spacing:-1px;font-variant-numeric:tabular-nums;
+  line-height:1;
+}
+.ring-info strong span{font-size:11px;color:#666;font-weight:500}
+.ring-info small{display:block;font-size:9px;color:#666;margin-top:4px}
+/* Flat metric (legacy) */
+.metric strong{
+  display:block;font-size:24px;margin-top:8px;
+  letter-spacing:-.5px;font-variant-numeric:tabular-nums;
+}
+.metric strong span{font-size:11px;color:#777;font-weight:500}
+.meter{height:4px;border-radius:9px;background:#1e1e22;overflow:hidden;margin-top:11px}
+.meter div{
+  height:100%;width:0;
+  background:linear-gradient(90deg,#a90c19,#ff4b55);
+  transition:width .28s ease-out;
+}
+.monitor-note{font-size:10px;color:#777;line-height:1.65;margin:10px 2px 0}
+/* CPU ring color per load */
+.ring-fill.cpu{stroke:#e31c2e}
+.ring-fill.gpu{stroke:#ff7b45}
+.ring-fill.mem{stroke:#a855f7}
+.ring-fill.fps{stroke:#55d99a}
+.ring-fill.bat{stroke:#f5c542}
+.ring-fill.temp{stroke:#ff4855}
+
+/* ─── ENGINE LAB ────────────────────────────────────────────── */
+.engine-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.engine-btn{
+  min-height:80px;text-align:left;
+  border:1px solid #2a2530;border-radius:12px;
+  background:linear-gradient(145deg,#141418,#0c0c10);
+  color:#eee;padding:13px;cursor:pointer;font:inherit;
+  position:relative;overflow:hidden;
+  transition:border-color .2s,background .2s,transform .15s var(--ease-spring);
+  contain:layout paint;
+}
+.engine-btn strong{display:block;font-size:11px;letter-spacing:.6px;font-weight:700}
+.engine-btn small{display:block;margin-top:6px;color:#666;font-size:9px;line-height:1.5}
+.engine-btn:hover{border-color:#6a3040;background:#181418;transform:translateY(-1px)}
+.engine-btn:active{transform:scale(.985)}
+.engine-btn[aria-busy="true"]{border-color:var(--red);box-shadow:inset 3px 0 var(--red)}
+/* Color accent per engine */
+.engine-btn[data-engine="network"]{border-left:2px solid #3a4a70}
+.engine-btn[data-engine="storage"]{border-left:2px solid #3a5a3a}
+.engine-btn[data-engine="battery"]{border-left:2px solid #5a4a20}
+.engine-btn[data-engine="thermal"]{border-left:2px solid #6a2a30}
+.engine-btn[data-engine="frames"]{border-left:2px solid #2a5a5a}
+.engine-btn[data-engine="memory"]{border-left:2px solid #4a3a6a}
+.engine-btn[data-engine="graphics"]{border-left:2px solid #4a3a4a}
+.engine-btn[data-engine="cpu-sched"]{border-left:2px solid #3a5a4a}
+.engine-btn[data-engine="wakelock"]{border-left:2px solid #5a3a3a}
+.engine-btn[data-engine="process"]{border-left:2px solid #3a3a5a}
+.engine-output{
+  margin-top:11px;min-height:68px;max-height:240px;
+  overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;
+  background:#060608;border:1px solid #242230;
+  border-radius:11px;padding:12px;
+  color:#c0b8bc;font:10px/1.7 ui-monospace,monospace;
+}
+.engine-output:empty::before{content:'ENGINE OUTPUT · Select a diagnostic engine';color:#555}
+.engine-output[data-state="error"]{border-color:#6a2030;color:#ff9da3}
+.engine-output[data-state="busy"]::before{content:'Running engine…';color:#888}
+
+/* ─── CPU GOVERNOR ───────────────────────────────────────────── */
+.gov-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.gov-btn{
+  padding:15px 12px;border:1px solid var(--line);
+  background:#0e0e11;border-radius:12px;color:#ddd;
+  cursor:pointer;font:inherit;text-align:left;
+  transition:border-color .18s,background .18s,transform .15s var(--ease-spring);
+}
+.gov-btn strong{display:block;font-size:13px;font-weight:700;margin-bottom:5px}
+.gov-btn small{font-size:9px;color:#666;line-height:1.5;display:block}
+.gov-btn .gov-tag{
+  display:inline-block;margin-top:7px;
+  padding:3px 7px;font-size:9px;letter-spacing:1px;
+  border-radius:5px;background:#1e1e22;color:#888;
+}
+.gov-btn.active{border-color:var(--red);background:#1a1013}
+.gov-btn.active .gov-tag{background:#2a1218;color:#ff7078}
+.gov-btn:hover:not(.active){border-color:#5a2a30;transform:translateY(-1px)}
+.gov-btn:active{transform:scale(.985)}
+
+/* ─── RAM / MEMORY OPTIMIZER ─────────────────────────────────── */
+.mem-panel{display:flex;align-items:center;gap:16px;margin-bottom:14px;padding:14px;
+  border:1px solid var(--line);background:#0e0e11;border-radius:12px}
+.mem-ring-wrap{flex-shrink:0;position:relative;width:72px;height:72px}
+.mem-ring-wrap svg{transform:rotate(-90deg)}
+.mem-text{min-width:0}
+.mem-label{font-size:9px;letter-spacing:1px;color:#777;margin-bottom:4px}
+.mem-val{font-size:26px;font-weight:700;letter-spacing:-1.5px;font-variant-numeric:tabular-nums}
+.mem-val span{font-size:12px;color:#666;font-weight:500}
+.mem-free{font-size:10px;color:#888;margin-top:4px}
+
+/* ─── DIAGNOSTICS ────────────────────────────────────────────── */
+.diag-grid{display:grid;grid-template-columns:1fr;gap:8px}
+.diag{
+  display:flex;align-items:center;gap:11px;
+  padding:13px;border:1px solid #242228;
+  background:#0a0a0d;border-radius:11px;
+}
+.diag-dot{
+  width:9px;height:9px;border-radius:50%;
+  background:#55d99a;
+  box-shadow:0 0 12px var(--green-glow);
+  flex-shrink:0;
+  animation:diag-pulse 2.8s ease-in-out infinite;
+}
+@keyframes diag-pulse{
+  0%,100%{box-shadow:0 0 6px var(--green-glow)}
+  50%{box-shadow:0 0 16px #55d99a88}
+}
+.diag div{min-width:0;flex:1}
+.diag b{font-size:11px;display:block;font-weight:600}
+.diag small{display:block;color:#666;font-size:9px;margin-top:4px}
+.diag strong{font-size:9px;color:#ff8088;letter-spacing:1px;flex-shrink:0}
+
+/* ─── SECTION DIVIDER ───────────────────────────────────────── */
+.section-divider{
+  height:1px;margin:6px 0;
+  background:linear-gradient(90deg,transparent,#2a2a30,transparent);
+}
+
+/* ─── FOOTER ────────────────────────────────────────────────── */
+footer{
+  text-align:center;color:#444;
+  font-size:9px;line-height:2;margin-top:26px;
+  padding-top:18px;border-top:1px solid #0f0f13;
+}
+footer .footer-brand{
+  font-size:11px;font-weight:700;letter-spacing:2px;
+  color:#333;margin-bottom:4px;
+}
+
+/* ─── LOADING STATE ─────────────────────────────────────────── */
+.skeleton{
+  background:linear-gradient(90deg,#111 25%,#1a1a1e 50%,#111 75%);
+  background-size:200% 100%;
+  animation:skeleton-sweep 1.4s ease infinite;
+  border-radius:6px;
+}
+@keyframes skeleton-sweep{
+  0%{background-position:200% 0}
+  100%{background-position:-200% 0}
+}
+
+/* ─── RESPONSIVE ─────────────────────────────────────────────── */
+@media(min-width:620px){
+  .wrap{padding:26px 22px 52px}
+  .modes{grid-template-columns:repeat(4,1fr)}
+  .games{grid-template-columns:repeat(3,1fr)}
+  .options.fps{grid-template-columns:repeat(7,1fr)}
+  .options.refresh{grid-template-columns:repeat(5,1fr)}
+  .select-grid{grid-template-columns:1fr 1fr}
+  .toggle-list{grid-template-columns:1fr 1fr}
+  .monitor-grid{grid-template-columns:repeat(4,1fr)}
+  .hero{padding:34px 28px}
+  .engine-grid{grid-template-columns:repeat(3,1fr)}
+  .gov-grid{grid-template-columns:repeat(4,1fr)}
+  .diag-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:380px){
+  .games{grid-template-columns:1fr}
+  .wrap{padding:12px 10px 40px}
+  .hero{padding:20px 14px}
+  .qb-panel{flex-direction:column;align-items:flex-start}
+  .qb-btn{width:100%}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation:none!important;
+    transition:none!important;
+    scroll-behavior:auto!important;
+  }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ─── HEADER ──────────────────────────────────────────────── -->
+<header>
+  <div class="brand">
+    <div class="logo-wrap" aria-hidden="true">
+      <div class="logo-inner">Z</div>
+    </div>
+    <div class="brand-text">
+      <h1>ZTC BOOSTER</h1>
+      <p>ZTC X ENGINE · ADAPTIVE PERFORMANCE</p>
+    </div>
+  </div>
+  <div class="header-badges">
+    <div class="ver-tag">v27</div>
+    <div class="tag">ZTC X ENGINE</div>
+  </div>
+</header>
+
+<!-- ─── HERO ────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="kicker">SYSTEM PERFORMANCE INTERFACE</div>
+  <h2>PLAY HARD.<br><span class="accent">RUN SMOOTH.</span></h2>
+  <p class="hero-sub">Configure game profiles, display targets, CPU scheduling, memory optimization and render preferences — all from one dashboard.</p>
+  <div class="hero-stats">
+    <div class="stat"><span>PROFILE</span><b id="summaryMode">Performance Boost</b></div>
+    <div class="stat"><span>GAME</span><b id="summaryGame">Mobile Legends</b></div>
+    <div class="stat"><span>FPS TARGET</span><b id="summaryFps">165 FPS</b></div>
+    <div class="stat"><span>GOVERNOR</span><b id="summaryGov">schedutil</b></div>
+    <div class="titan-score-badge">
+      <div>
+        <span style="font-size:9px;letter-spacing:1px;color:#777;display:block">TITAN SCORE</span>
+        <span class="score-val" id="titanScore">--</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── QUICK BOOST ──────────────────────────────────────────── -->
+<div class="qb-section">
+  <div class="qb-panel">
+    <div class="qb-left">
+      <div class="qb-label">⚡ QUICK BOOST</div>
+      <div class="qb-title">One-tap performance burst</div>
+      <div class="qb-sub">Saves profile + applies all enabled optimizations instantly</div>
+      <div class="qb-status-bar" id="qbChips">
+        <span class="qb-chip on" id="qbChipMode">Performance Boost</span>
+        <span class="qb-chip on" id="qbChipFps">165 FPS</span>
+        <span class="qb-chip on" id="qbChipRefresh">60Hz</span>
+        <span class="qb-chip" id="qbChipGov">schedutil</span>
+      </div>
+    </div>
+    <button class="qb-btn" id="quickBoostBtn" aria-label="Quick Boost">
+      <span class="qb-icon">⚡</span>
+      <span>BOOST NOW</span>
+    </button>
+  </div>
+</div>
+
+<!-- ─── 01 PERFORMANCE MODE ──────────────────────────────────── -->
+<section class="section">
+  <div class="head"><h3>01 / Performance Mode</h3><span>SELECT ONE</span></div>
+  <div class="modes">
+    <button class="mode" data-mode="Power Save">
+      <i class="tick"></i><small>PROFILE 01</small>
+      <strong>Power Save</strong><em>Battery-first, minimal drain</em>
+    </button>
+    <button class="mode" data-mode="Balance Mode">
+      <i class="tick"></i><small>PROFILE 02</small>
+      <strong>Balance Mode</strong><em>Everyday gaming</em>
+    </button>
+    <button class="mode active" data-mode="Performance Boost">
+      <i class="tick"></i><small>PROFILE 03</small>
+      <strong>Performance Boost</strong><em>Smooth high-FPS gameplay</em>
+    </button>
+    <button class="mode" data-mode="Extreme Boost">
+      <i class="tick"></i><small>PROFILE 04</small>
+      <strong>Extreme Boost</strong><em>All-out max performance</em>
+    </button>
+  </div>
+</section>
+
+<!-- ─── 02 GAME SELECT ───────────────────────────────────────── -->
+<section class="section">
+  <div class="head"><h3>02 / Game Profile</h3><span>GAME TARGET</span></div>
+  <div class="panel">
+    <div class="games" id="games">
+      <button class="game active" data-game="Mobile Legends"><span class="game-mark">ML</span><span><strong>Mobile Legends</strong><small>MOBA</small></span></button>
+      <button class="game" data-game="PUBG Mobile"><span class="game-mark">PUBG</span><span><strong>PUBG Mobile</strong><small>Battle Royale</small></span></button>
+      <button class="game" data-game="Call of Duty Mobile"><span class="game-mark">COD</span><span><strong>Call of Duty Mobile</strong><small>FPS Shooter</small></span></button>
+      <button class="game" data-game="Free Fire"><span class="game-mark">FF</span><span><strong>Free Fire</strong><small>Battle Royale</small></span></button>
+      <button class="game" data-game="Blood Strike"><span class="game-mark">BS</span><span><strong>Blood Strike</strong><small>FPS Shooter</small></span></button>
+      <button class="game" data-game="Genshin Impact"><span class="game-mark">GI</span><span><strong>Genshin Impact</strong><small>Open World RPG</small></span></button>
+      <button class="game" data-game="CarX Street"><span class="game-mark">CX</span><span><strong>CarX Street</strong><small>Street Racing</small></span></button>
+      <button class="game" data-game="Roblox"><span class="game-mark">RBX</span><span><strong>Roblox</strong><small>Sandbox</small></span></button>
+      <button class="game" data-game="Car Parking Multiplayer"><span class="game-mark">CP</span><span><strong>Car Parking</strong><small>Driving Sim</small></span></button>
+      <button class="game" data-game="Honkai Star Rail"><span class="game-mark">HSR</span><span><strong>Honkai Star Rail</strong><small>Turn-based RPG</small></span></button>
+      <button class="game" data-game="Warzone Mobile"><span class="game-mark">WZM</span><span><strong>Warzone Mobile</strong><small>FPS Shooter</small></span></button>
+      <button class="game" data-game="Brawl Stars"><span class="game-mark">BS</span><span><strong>Brawl Stars</strong><small>Action</small></span></button>
+      <button class="game" data-game="Stumble Guys"><span class="game-mark">SG</span><span><strong>Stumble Guys</strong><small>Party Game</small></span></button>
+      <button class="game" data-game="League of Legends Wild Rift"><span class="game-mark">WR</span><span><strong>Wild Rift</strong><small>MOBA</small></span></button>
+      <button class="game" data-game="Minecraft"><span class="game-mark">MC</span><span><strong>Minecraft PE</strong><small>Sandbox</small></span></button>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 03 FPS TARGET ────────────────────────────────────────── -->
+<section class="section">
+  <div class="head"><h3>03 / FPS Target</h3><span id="fpsGameLabel">MOBILE LEGENDS</span></div>
+  <div class="panel">
+    <div class="options fps" id="fpsOptions">
+      <button class="opt" data-fps="60"><b>60</b><small>STABLE</small></button>
+      <button class="opt" data-fps="90"><b>90</b><small>SMOOTH</small></button>
+      <button class="opt" data-fps="120"><b>120</b><small>HIGH</small></button>
+      <button class="opt active" data-fps="144"><b>144</b><small>ULTRA</small></button>
+      <button class="opt" data-fps="165"><b>165</b><small>TITAN</small></button>
+      <button class="opt" data-fps="240"><b>240</b><small>EXTREME</small></button>
+      <button class="opt" data-fps="480"><b>480</b><small>BEAST</small></button>
+    </div>
+    <p class="note">Select a target your display panel and game support. TITAN reads SurfaceFlinger frame timestamps when the ROM exposes them. A game's own engine cap overrides this setting.</p>
+  </div>
+</section>
+
+<!-- ─── 04 REFRESH RATE ──────────────────────────────────────── -->
+<section class="section">
+  <div class="head"><h3>04 / Display Refresh</h3><span>PANEL TARGET</span></div>
+  <div class="panel">
+    <div class="options refresh" id="refreshOptions">
+      <button class="opt active" data-refresh="60Hz"><b>60Hz</b><small>BASE</small></button>
+      <button class="opt" data-refresh="90Hz"><b>90Hz</b><small>SMOOTH</small></button>
+      <button class="opt" data-refresh="120Hz"><b>120Hz</b><small>HIGH</small></button>
+      <button class="opt" data-refresh="144Hz"><b>144Hz</b><small>ULTRA</small></button>
+      <button class="opt" data-refresh="165Hz"><b>165Hz</b><small>TITAN</small></button>
+    </div>
+    <p class="note">TITAN checks the display's reported modes and applies only the rates the panel declares. Android may still choose a lower dynamic rate internally.</p>
+  </div>
+</section>
+
+<!-- ─── 05 RENDER & DRIVER ──────────────────────────────────── -->
+<section class="section">
+  <div class="head"><h3>05 / Render & Driver</h3><span>GRAPHICS PROFILE</span></div>
+  <div class="panel toggle-list">
+    <div class="toggle-row">
+      <div><label>Vulkan / OpenGL ES</label><small>Render API is selected by the app and vendor driver</small></div>
+      <strong class="feature-state">APP CTRL</strong>
+    </div>
+    <div class="toggle-row">
+      <div><label>Skia Renderer</label><small>Android UI compositor — not a universal game FPS switch</small></div>
+      <strong class="feature-state">SYSTEM</strong>
+    </div>
+    <div class="toggle-row">
+      <div><label>Graphics Driver</label><small>Vendor game-driver settings remain under Developer Options</small></div>
+      <strong class="feature-state">DEFAULT</strong>
+    </div>
+    <div class="toggle-row">
+      <div><label>ANGLE Translation</label><small>Not forced globally — unsupported changes crash apps</small></div>
+      <strong class="feature-state">SAFE</strong>
+    </div>
+  </div>
+  <p class="note">Renderer and driver info is read-only. TITAN does not force vendor drivers or undocumented graphics properties.</p>
+</section>
+
+<!-- ─── 06 ANIMATION SCALE ──────────────────────────────────── -->
+<section class="section">
+  <div class="head"><h3>06 / Animation Scale</h3><span>UI PREFERENCE</span></div>
+  <div class="panel">
+    <div class="range-wrap">
+      <label for="animRange">Animation scale: <b id="animValue">1x</b></label>
+      <input id="animRange" type="range" min="0" max="8" value="4">
+      <div class="range-values" id="animPresets">
+        <button class="scale" data-scale="0">Off</button>
+        <button class="scale" data-scale="0.4">0.4x</button>
+        <button class="scale" data-scale="0.5">0.5x</button>
+        <button class="scale" data-scale="0.6">0.6x</button>
+        <button class="scale active" data-scale="1">1x</button>
+        <button class="scale" data-scale="1.5">1.5x</button>
+        <button class="scale" data-scale="2">2x</button>
+        <button class="scale" data-scale="5">5x</button>
+        <button class="scale" data-scale="10">10x</button>
+      </div>
+    </div>
+    <p class="note">TITAN applies this scale to all three global Android animation settings with read-back verification. Original values are backed up on first apply.</p>
+  </div>
+</section>
+
+<!-- ─── 07 ENGINE FEATURES ──────────────────────────────────── -->
+<section class="section">
+  <div class="head"><h3>07 / Engine Features</h3><span>PROFILE SAVED ON DEVICE</span></div>
+  <div class="panel">
+    <div class="toggle-list" id="featureOptions">
+      <div class="toggle-row"><div><label>Android Game Mode</label><small>Request per-game performance/battery mode when the OS supports it</small></div><label class="switch"><input type="checkbox" data-feature="game_mode" checked><span class="slider"></span></label></div>
+      <div class="toggle-row"><div><label>Adaptive Refresh</label><small>Apply only a refresh mode reported by the display</small></div><label class="switch"><input type="checkbox" data-feature="refresh" checked><span class="slider"></span></label></div>
+      <div class="toggle-row"><div><label>Animation Scale Tuning</label><small>Adjust Android's three animation scales with backup</small></div><label class="switch"><input type="checkbox" data-feature="animation" checked><span class="slider"></span></label></div>
+      <div class="toggle-row"><div><label>Live Device Telemetry</label><small>CPU, GPU, RAM, battery, temperature and storage monitoring</small></div><label class="switch"><input type="checkbox" data-feature="telemetry" checked><span class="slider"></span></label></div>
+      <div class="toggle-row"><div><label>Frame-Time Analyzer</label><small>SurfaceFlinger frame samples for the selected game</small></div><label class="switch"><input type="checkbox" data-feature="frames" checked><span class="slider"></span></label></div>
+      <div class="toggle-row"><div><label>Network Diagnostics</label><small>On-demand DNS and gateway checks</small></div><label class="switch"><input type="checkbox" data-feature="network" checked><span class="slider"></span></label></div>
+      <div class="toggle-row"><div><label>Battery Intelligence</label><small>Battery health and electrical telemetry checks</small></div><label class="switch"><input type="checkbox" data-feature="battery" checked><span class="slider"></span></label></div>
+      <div class="toggle-row"><div><label>Storage Analyzer</label><small>Filesystem capacity and inode checks</small></div><label class="switch"><input type="checkbox" data-feature="storage" checked><span class="slider"></span></label></div>
+      <div class="toggle-row"><div><label>ZRAM Compression Boost</label><small>Enable ZRAM read priority for tighter memory headroom</small></div><label class="switch"><input type="checkbox" data-feature="zram" checked><span class="slider"></span></label></div>
+      <div class="toggle-row"><div><label>Background Process Limiter</label><small>Restrict cached background processes during gaming</small></div><label class="switch"><input type="checkbox" data-feature="bg_limit" checked><span class="slider"></span></label></div>
+      <div class="toggle-row"><div><label>Network Buffer Boost</label><small>Enlarge TCP/UDP socket buffers for reduced ping variance</small></div><label class="switch"><input type="checkbox" data-feature="net_buf" checked><span class="slider"></span></label></div>
+      <div class="toggle-row"><div><label>Touch Response Enhance</label><small>Reduce touch sampling delay where the driver supports it</small></div><label class="switch"><input type="checkbox" data-feature="touch_latency" checked><span class="slider"></span></label></div>
+      <div class="toggle-row"><div><label>Thermal Safety Guard</label><small>Always enforced before performance mode — cannot be disabled</small></div><strong class="feature-state">ALWAYS ON</strong></div>
+    </div>
+    <p class="note">Thermal protection is never disabled. Save Profile stores your selections in plugin storage; Apply executes supported changes.</p>
+    <button class="action secondary" id="saveBtn">SAVE PROFILE ONLY</button>
+    <button class="action" id="applyBtn">SAVE & APPLY PROFILE</button>
+    <button class="action secondary" id="resetBtn">RESET OPTIONS</button>
+    <div class="status" id="statusBox">
+      <span class="dot"></span>
+      <span id="statusText">Open this page from AxManager / KernelSU WebUI to connect the TITAN engine.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 08 CPU GOVERNOR ──────────────────────────────────────── -->
+<section class="section">
+  <div class="head"><h3>08 / CPU Governor</h3><span>KERNEL SCHEDULER</span></div>
+  <div class="panel">
+    <div class="gov-grid" id="govOptions">
+      <button class="gov-btn" data-gov="performance">
+        <strong>PERFORMANCE</strong>
+        <small>Locks all cores to maximum frequency. Highest FPS, highest battery drain. Best for short intense sessions.</small>
+        <span class="gov-tag">MAX CLOCK</span>
+      </button>
+      <button class="gov-btn active" data-gov="schedutil">
+        <strong>SCHEDUTIL</strong>
+        <small>Kernel-driven demand scaling via CFS scheduler. Best balance of responsiveness and efficiency on modern SoCs.</small>
+        <span class="gov-tag">BALANCED ✓</span>
+      </button>
+      <button class="gov-btn" data-gov="interactive">
+        <strong>INTERACTIVE</strong>
+        <small>Aggressive ramp-up with a hold time floor. More responsive than ondemand, less aggressive than performance.</small>
+        <span class="gov-tag">RESPONSIVE</span>
+      </button>
+      <button class="gov-btn" data-gov="powersave">
+        <strong>POWERSAVE</strong>
+        <small>Locks cores to minimum frequency. Extends battery life significantly. Not recommended for gaming.</small>
+        <span class="gov-tag">BATTERY</span>
+      </button>
+    </div>
+    <p class="note">Governor is applied to all online CPU clusters. TITAN writes to <code>/sys/devices/system/cpu/cpu*/cpufreq/scaling_governor</code> with read-back verification. Kernel must expose the chosen governor.</p>
+  </div>
+</section>
+
+<!-- ─── 09 MEMORY OPTIMIZER ─────────────────────────────────── -->
+<section class="section">
+  <div class="head"><h3>09 / Memory Optimizer</h3><span>RAM & ZRAM</span></div>
+  <div class="panel">
+    <div class="mem-panel" id="memPanel">
+      <div class="mem-ring-wrap" id="memRingWrap">
+        <svg width="72" height="72" viewBox="0 0 72 72" id="memRingSvg">
+          <circle cx="36" cy="36" r="28" fill="none" stroke="#1e1e22" stroke-width="6"/>
+          <circle id="memRingFill" cx="36" cy="36" r="28" fill="none"
+            stroke="#a855f7" stroke-width="6" stroke-linecap="round"
+            stroke-dasharray="0 176" transform="rotate(-90 36 36)"
+            style="transition:stroke-dasharray .45s ease"/>
+        </svg>
+      </div>
+      <div class="mem-text">
+        <div class="mem-label">RAM USED</div>
+        <div class="mem-val"><span id="memUsedVal">--</span><span>%</span></div>
+        <div class="mem-free">Free: <b id="memFreeVal">-- MB</b></div>
+        <div class="mem-free" style="margin-top:2px">ZRAM: <b id="memZramVal">-- MB</b></div>
+      </div>
+    </div>
+    <div class="toggle-list" style="margin-bottom:10px">
+      <div class="toggle-row"><div><label>ZRAM Read Priority Boost</label><small>Prioritize ZRAM swap reads to reduce stutter during swapping</small></div><label class="switch"><input type="checkbox" data-feature="zram_prio" checked><span class="slider"></span></label></div>
+      <div class="toggle-row"><div><label>Background Cache Limiter</label><small>Aggressively reclaim cached background processes during gaming</small></div><label class="switch"><input type="checkbox" data-feature="cache_limit" checked><span class="slider"></span></label></div>
+    </div>
+    <button class="action" id="ramFlushBtn">FLUSH RAM</button>
+    <button class="action secondary" id="ramReportBtn">READ MEMORY REPORT</button>
+    <div class="status" id="memStatus" style="margin-top:10px">
+      <span class="dot"></span>
+      <span id="memStatusText">Memory optimizer ready — connect the TITAN engine to flush RAM.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 10 REAL-TIME MONITOR ─────────────────────────────────── -->
+<section class="section">
+  <div class="head"><h3>10 / Real-Time Monitor</h3><span id="telemetryLive">DEVICE TELEMETRY</span></div>
+  <div class="panel">
+    <button class="action secondary" id="cleanBtn">RUN DEVICE HEALTH CHECK</button>
+    <div class="monitor-grid" id="monitorGrid" style="margin-top:13px">
+      <!-- Ring metrics injected by JS -->
+      <div class="metric" id="metricCPU">
+        <div class="label-row">CPU LOAD</div>
+        <div class="ring-metric">
+          <div class="ring-container" id="ringCPU"></div>
+          <div class="ring-info"><strong id="cpu">--<span>%</span></strong><small>Processor</small></div>
+        </div>
+      </div>
+      <div class="metric" id="metricGPU">
+        <div class="label-row">GPU LOAD</div>
+        <div class="ring-metric">
+          <div class="ring-container" id="ringGPU"></div>
+          <div class="ring-info"><strong id="gpu">--<span>%</span></strong><small>Graphics</small></div>
+        </div>
+      </div>
+      <div class="metric" id="metricFPS">
+        <div class="label-row">FPS MONITOR</div>
+        <div class="ring-metric">
+          <div class="ring-container" id="ringFPS"></div>
+          <div class="ring-info"><strong id="fps">--<span> FPS</span></strong><small>SurfaceFlinger</small></div>
+        </div>
+      </div>
+      <div class="metric" id="metricMEM">
+        <div class="label-row">RAM USED</div>
+        <div class="ring-metric">
+          <div class="ring-container" id="ringMEM"></div>
+          <div class="ring-info"><strong id="mem">--<span>%</span></strong><small>Memory</small></div>
+        </div>
+      </div>
+    </div>
+    <p class="monitor-note" id="monitorNote">Open inside AxManager / KernelSU WebUI for live Android telemetry. FPS sampled from SurfaceFlinger when available. N/A means the ROM does not expose that sensor.</p>
+  </div>
+</section>
+
+<!-- ─── 11 ENGINE LAB ────────────────────────────────────────── -->
+<section class="section">
+  <div class="head"><h3>11 / ZTC X Engine Lab</h3><span>ON-DEMAND · READ ONLY</span></div>
+  <div class="panel">
+    <div class="engine-grid">
+      <button class="engine-btn" data-engine="network"><strong>NETWORK DIAGNOSTICS</strong><small>DNS · gateway · interface · latency</small></button>
+      <button class="engine-btn" data-engine="storage"><strong>STORAGE ANALYZER</strong><small>/data · shared storage · inode usage</small></button>
+      <button class="engine-btn" data-engine="battery"><strong>BATTERY INTELLIGENCE</strong><small>Health · temperature · voltage · cycles</small></button>
+      <button class="engine-btn" data-engine="display"><strong>DISPLAY INTELLIGENCE</strong><small>Reported refresh modes · active caps</small></button>
+      <button class="engine-btn" data-engine="diagnostics"><strong>ENGINE SELF-TEST</strong><small>Commands · permissions · plugin state</small></button>
+      <button class="engine-btn" data-engine="frames"><strong>FRAME-TIME ANALYZER</strong><small>FPS · frame intervals · slow-frame share</small></button>
+      <button class="engine-btn" data-engine="thermal"><strong>THERMAL INTELLIGENCE</strong><small>Sensor zones · throttle states · safety</small></button>
+      <button class="engine-btn" data-engine="memory"><strong>MEMORY PRESSURE LAB</strong><small>MemAvailable · swap · PSI · ZRAM</small></button>
+      <button class="engine-btn" data-engine="graphics"><strong>GPU CAPABILITY SCAN</strong><small>GPU properties · GLES · SurfaceFlinger</small></button>
+      <button class="engine-btn" data-engine="appinfo"><strong>GAME PACKAGE INSPECTOR</strong><small>Install · version · APK path · flags</small></button>
+      <button class="engine-btn" data-engine="power"><strong>POWER INTELLIGENCE</strong><small>Voltage · current · cycles · profile</small></button>
+      <button class="engine-btn" data-engine="cpu-sched"><strong>CPU SCHEDULER INFO</strong><small>Governor · freq table · online cores</small></button>
+      <button class="engine-btn" data-engine="wakelock"><strong>WAKELOCK INSPECTOR</strong><small>Active wakelocks · suspend blockers</small></button>
+      <button class="engine-btn" data-engine="process"><strong>PROCESS MANAGER</strong><small>Top CPU/RAM processes · game process</small></button>
+    </div>
+    <pre class="engine-output" id="engineOutput" aria-live="polite"></pre>
+    <p class="note">Engines run only on demand. All reads are non-destructive. Network checks are bounded — no traffic flood or background scan.</p>
+  </div>
+</section>
+
+<!-- ─── 12 DIAGNOSTICS ───────────────────────────────────────── -->
+<section class="section">
+  <div class="head"><h3>12 / ZTC Engine Diagnostics</h3><span>DEVICE-SAFE MODE</span></div>
+  <div class="panel diag-grid">
+    <div class="diag"><span class="diag-dot"></span><div><b>Thermal protection</b><small>Android-managed · untouched</small></div><strong>SAFE</strong></div>
+    <div class="diag"><span class="diag-dot"></span><div><b>CPU / GPU clocks</b><small>Kernel-managed · no forced overclock</small></div><strong>AUTO</strong></div>
+    <div class="diag"><span class="diag-dot"></span><div><b>Profile storage</b><small>Original values backed up before changes</small></div><strong>READY</strong></div>
+    <div class="diag"><span class="diag-dot"></span><div><b>Governor write</b><small>Read-back verified after each apply</small></div><strong id="govDiag">STANDBY</strong></div>
+    <div class="diag"><span class="diag-dot"></span><div><b>Live telemetry bridge</b><small id="bridgeLabel">AxManager / KernelSU WebUI API</small></div><strong id="bridgeState">NOT LINKED</strong></div>
+    <div class="diag"><span class="diag-dot" style="background:#f5c542;box-shadow:0 0 12px #f5c54266"></span><div><b>Memory optimizer</b><small>RAM flush + ZRAM priority</small></div><strong>READY</strong></div>
+  </div>
+  <p class="note">The AxManager WebUI uses its documented async shell API. Browser preview cannot change Android settings or read device sensors.</p>
+</section>
+
+<footer>
+  <div class="footer-brand">ZTC BOOSTER ZTC X ENGINE</div>
+  ZTC BOOSTER · ZEYNAR THE CREATOR<br>
+  AxManager-connected WebUI · Real device readings with read-back verified Android actions<br>
+  Actual game FPS remains dependent on the game engine, display panel and device capabilities.
+</footer>
+
+</div>
+<script src="main.js" defer></script>
+</body>
+</html>
